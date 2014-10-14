@@ -115,8 +115,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
     if (!self.scrollView || gesture.view != self.scrollView) {
         return;
     }
+    
     // Don't try to scroll navigation bar if there's not enough room
     if (self.scrollView.frame.size.height + (self.bounds.size.height * 2) >= self.scrollView.contentSize.height) {
+        return;
+    }
+    
+    if (self.scrollView.contentOffset.y < - self.scrollView.contentInset.top) {
         return;
     }
     
@@ -193,7 +198,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 - (void)setContentInset
 {
     
-    NSLog(@"inset:%ld,offset:%ld",(long)self.scrollView.contentInset.top,(long)self.scrollView.contentOffset.y);
     // Don't mess the scrollview at first start
     if(self.scrollView.contentInset.top==0 && self.scrollView.contentOffset.y==0){
         return;
